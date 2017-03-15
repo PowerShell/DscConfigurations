@@ -9,43 +9,37 @@ For information about the scripts that perform work described by Configurations,
 This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
-## What is a DSC Configuration?
+# Sharing Configurations
+## Publishing a config to the Gallery should be done in one of these ways:
 
-A DSC Configuration describes the state of a computer in a declarative syntax.
-PowerShell provides a language extension for authoring configurations in a format that should be easily understood by anyone (even if they are not familiar with PowerShell).
-A configuration file is composed of DSC Resources, which are installed on the computer as PowerShell Modules.
-The DSC Resources handle tasks associated with performing work on the computer, and are surfaced in the configuration as a set of properties.
-As a result, authors maintaining a configuration are able to deliver functionality in a consistent fashion without becoming a subject matter expert.
+### Configuration Script
+If the Config is a script, create and require in the Script a separate module that contains the docs, help, examples, & tests. 
+This ensures when the script is published or downloaded using PSGet cmdlets, the module will be brought along.
 
-As an example, a simple configuration that enables the web server feature on a Windows Server would be:
+You **must** use the RequiredModule metadata to specify the linked module.
 
-```PowerShell
-Configuration WebServer
-{
-    WindowsFeature WebServerFeature
-    {
-        Ensure = 'Present'
-        Name   = 'Web-Server'
-    }
-}
-```
+If there is a separate Config Data (PSD1) file, it belongs in the module. You **must** document how it is used.
 
-# Configuration Modules
+You **should** include a line generating the MOF in the script.
 
-Configurations shared in submodules of this repo should follow a design pattern based on PowerShell modules.
+You **may** include the Start-DscConfiguration command in the script. This means the script will be complete, but the deployment will start on script execution when it may or may not be appropriate in the user’s environment. 
 
-Configurations should be stored in .PSM1 files, as opposed to .PS1 files.
-Configurations may share a module, meaning the dependencies for the module will list all resources across all included configurations.
-For example, if there are 3 methods of installing and configuring a solution, include the configurations in a single module file.
+### Composite Resource
+If the Config is a Composite Resource, publish as a module that contains all the other items. 
+You **should** consider publishing a script that uses the composite resource as in the preceeding option.
 
-Configurations often rely on complex expressions of configuration data.
-Where appropriate, configuration modules should include a subfolder 'Examples' that demonstrate how to generate a .mof file using sample configuration data, or parameters.  
+## Sharing relies on completing important metadata 
+```New-ModuleManifest``` and ```New-ScriptFileInfo``` will generate the placeholders for the metadata needed.
 
-The module should also include a .PSD1 file that provides version information, metadata, and the dependencies for the Configuration.
-Dependencies would include a list of DSC Resources that are required for the Configuration to function.
+All items published to the Gallery **must** have the correct metadata filled in for:
+- Author
+- Description
+- Version
+- Company name
+- Copyright. 
 
-The repo and module name should be based on the scenario that will be deployed and configured, followed by "Config".
-For example, a configuration for an IIS web server would be delivered as part of a module with a name such as "IISConfig" or "WebConfig".
+You **should** consider associating DSC resources with your configuration by using RequiredModule statements. 
+This is a general best practice, as it allows users to make a single call to the gallery to geet all preqrequisites for running the script. However, there may be situations where it is incorrect.
 
 # Authoring guidelines
 
@@ -56,9 +50,6 @@ For more information, visit the links below:
  - [Style guidelines](https://github.com/PowerShell/DscResources/blob/master/StyleGuidelines.md)
  - [Maintainers](https://github.com/PowerShell/DscResources/blob/master/Maintainers.md)
 
-# Contributing
-
-For details on how to contribute a module to this repo, see [Contributing.md](./CONTRIBUTING.md)
 
 # Community Discussion
 
