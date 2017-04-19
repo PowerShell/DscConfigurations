@@ -1,5 +1,5 @@
-[submodule "dscconfiguration.template"]
-	path = TemplateConfig
+[submodule "TemplateConfig"]
+	path = templateconfig
 	url = http://github.com/powershell/templateconfig
 [submodule "dscconfiguration.tests"]
 	path = dscconfiguration.tests
