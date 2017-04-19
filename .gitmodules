@@ -1,12 +1,6 @@
-[submodule "dscconfiguration.template"]
-	path = dscconfiguration.template
-	url = http://github.com/microsoft/dscconfiguration.template
+[submodule "TemplateConfig"]
+	path = templateconfig
+	url = http://github.com/powershell/templateconfig
 [submodule "dscconfiguration.tests"]
 	path = dscconfiguration.tests
-	url = http://github.com/microsoft/dscconfiguration.tests
-[submodule "DSCConfigurations/WindowsDNSServer.Config"]
-	path = DSCConfigurations/WindowsDNSServer.Config
-	url = http://github.com/microsoft/WindowsDNSServer.Config
-[submodule "DSCConfigurations/WindowsIISServer.Config"]
-	path = DSCConfigurations/WindowsIISServer.Config
-	url = http://github.com/microsoft/WindowsIISServer.Config
+	url = http://github.com/powershell/dscconfiguration.tests

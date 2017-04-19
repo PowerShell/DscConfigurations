@@ -41,6 +41,8 @@ All items published to the Gallery **must** have the correct metadata filled in 
 You **should** consider associating DSC resources with your configuration by using RequiredModule statements. 
 This is a general best practice, as it allows users to make a single call to the gallery to geet all preqrequisites for running the script. However, there may be situations where it is incorrect.
 
+If you are using the DSCConfiguration.Tests repo to automate hosting tests on Azure VM's, you **should** also populate the a new property in PSPrivateData named "WindowsOSVersion" and set the value to one of the strings supported by AzureRM.
+
 # Authoring guidelines
 
 The [DSC Resource repository](http://github.com/powershell/dscresources) includes guidance on authoring that is applicable to configurations as well.
